@@ -1,44 +1,20 @@
 {
-  "name": "ProjectPro — Estimating & Job Management",
   "short_name": "ProjectPro",
-  "description": "Offline-first project estimating and job management for homeowners, DIY users, tradies, contractors and service businesses.",
-  "id": "projectpro-pwa",
-  "start_url": "./index.html?source=pwa",
-  "scope": "./",
-  "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
-  "orientation": "portrait-primary",
-  "background_color": "#141218",
-  "theme_color": "#6750A4",
-  "lang": "en",
-  "dir": "ltr",
-  "categories": ["business", "productivity", "finance", "utilities"],
+  "name": "ProjectPro Dashboard",
   "icons": [
-    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "assets/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ],
-  "shortcuts": [
     {
-      "name": "New Quote",
-      "short_name": "Quote",
-      "description": "Create a new quote",
-      "url": "./index.html#/documents?new=quote",
-      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+      "src": "assets/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     },
     {
-      "name": "New Project",
-      "short_name": "Project",
-      "description": "Create a new project",
-      "url": "./index.html#/projects?new=1",
-      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Dashboard",
-      "short_name": "Dashboard",
-      "url": "./index.html#/dashboard",
-      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+      "src": "assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
-  ]
+  ],
+  "start_url": "./index.html",
+  "background_color": "#0a0a0c",
+  "theme_color": "#0a0a0c",
+  "display": "standalone"
 }
