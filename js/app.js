@@ -1,9 +1,9 @@
 /**
- * ProjectPro Core Dashboard Application
+ * ProjectPro Core Application Logic
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 1. Clock Updates ---
+  // Live Clock Controller
   const clockEl = document.getElementById('clock');
   const updateClock = () => {
     if (!clockEl) return;
@@ -15,23 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   updateClock();
   setInterval(updateClock, 1000);
 
-  // --- 2. Dynamic SVG Loader (Avoids Raw Markup Output) ---
-  const renderIcon = (svgString, containerElement) => {
-    if (!containerElement) return;
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(svgString, 'image/svg+xml');
-    const svgElement = doc.querySelector('svg');
-    if (svgElement) {
-      containerElement.innerHTML = '';
-      containerElement.appendChild(svgElement);
-    }
-  };
-
-  // --- 3. Register Service Worker for PWA Installation ---
+  // Register PWA Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js')
-        .then((reg) => console.log('ServiceWorker active:', reg.scope))
+        .then((reg) => console.log('ServiceWorker registered:', reg.scope))
         .catch((err) => console.error('ServiceWorker error:', err));
     });
   }
