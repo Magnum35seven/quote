@@ -7,19 +7,19 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
-  <meta name="theme-color" content="#0a0a0c">
+  <meta name="theme-color" content="#0f172a">
 </head>
 <body id="app-body">
   <div id="app" class="app-container">
-    <!-- Header -->
+    <!-- Top Bar Header -->
     <header class="top-bar">
       <h1 class="app-title">ProjectPro</h1>
       <div id="clock" class="clock-display">00:00</div>
     </header>
 
-    <!-- Main Dashboard View -->
-    <main id="dashboard-view" class="dashboard-grid">
-      <!-- Key Metrics Row -->
+    <!-- Main Dashboard -->
+    <main id="dashboard-view">
+      <!-- Top Metrics Row -->
       <section class="metrics-row">
         <div class="card metric-card">
           <span class="metric-label">Monthly Profit</span>
@@ -43,8 +43,8 @@
         </div>
       </section>
 
-      <!-- Dashboard Cards -->
-      <section class="cards-grid">
+      <!-- Main Feature Cards Grid -->
+      <section class="cards-grid" style="margin-top: 20px;">
         <!-- Financial Performance Card -->
         <div class="card feature-card">
           <div class="card-header">
@@ -54,11 +54,11 @@
             <h2>Financial Performance</h2>
           </div>
           <div class="card-body">
-            <div class="chart-placeholder">[ Bar Chart ]</div>
+            <div class="chart-placeholder">[ Bar Chart Visualizer ]</div>
           </div>
         </div>
 
-        <!-- Project Breakdown Card -->
+        <!-- Project Status Card -->
         <div class="card feature-card">
           <div class="card-header">
             <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -66,10 +66,10 @@
             </svg>
             <h2>Project Status</h2>
           </div>
-          <div class="card-body align-center">
+          <div class="card-body">
             <div class="donut-ring"></div>
             <p class="total-count">2</p>
-            <p class="sub-text">total projects</p>
+            <p class="sub-text">total active projects</p>
           </div>
         </div>
       </section>
