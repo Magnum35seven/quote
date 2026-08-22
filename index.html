@@ -35,7 +35,6 @@
       display: flex;
     }
 
-    /* Layout Wrapper */
     .app-layout {
       display: flex;
       width: 100vw;
@@ -78,6 +77,7 @@
       text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
+      cursor: pointer;
       transition: all 0.2s ease;
     }
 
@@ -92,7 +92,7 @@
       fill: currentColor;
     }
 
-    /* Main Workspace */
+    /* Main Content */
     .main-content {
       flex: 1;
       padding: 24px;
@@ -102,13 +102,17 @@
       overflow-y: auto;
     }
 
-    /* Header Bar */
     .top-bar {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
       padding-bottom: 12px;
       border-bottom: 1px solid var(--card-border);
+    }
+
+    .view-title {
+      font-size: 1.5rem;
+      font-weight: 700;
     }
 
     .clock-display {
@@ -121,7 +125,18 @@
       border: 1px solid var(--card-border);
     }
 
-    /* Cards Setup */
+    /* View Sections */
+    .view-section {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .view-section.active-view {
+      display: flex;
+    }
+
+    /* Cards */
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -130,7 +145,6 @@
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
     }
 
-    /* Metrics Grid */
     .metrics-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -164,7 +178,6 @@
       color: var(--text-secondary);
     }
 
-    /* Feature Cards Grid */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -203,7 +216,7 @@
       width: 100%;
     }
 
-    /* Financial Bar Chart Visualizer */
+    /* Bar Chart Visualizer */
     .bar-chart-container {
       display: flex;
       align-items: flex-end;
@@ -238,27 +251,17 @@
     .bar-fill {
       width: 100%;
       border-radius: 6px;
-      transition: height 0.4s ease;
     }
 
-    .bar-fill.revenue {
-      background-color: var(--accent-blue);
-    }
-
-    .bar-fill.expenses {
-      background-color: var(--accent-red);
-    }
-
-    .bar-fill.profit {
-      background-color: var(--accent-green);
-    }
+    .bar-fill.revenue { background-color: var(--accent-blue); }
+    .bar-fill.expenses { background-color: var(--accent-red); }
+    .bar-fill.profit { background-color: var(--accent-green); }
 
     .bar-label {
       font-size: 0.75rem;
       color: var(--text-secondary);
     }
 
-    /* Donut Chart Visualizer */
     .donut-ring {
       width: 90px;
       height: 90px;
@@ -281,31 +284,30 @@
 </head>
 <body id="app-body">
   <div class="app-layout">
-    <!-- Restored Sidebar Navigation -->
     <aside class="sidebar">
       <div class="brand-logo">ProjectPro</div>
       <nav>
         <ul class="nav-list">
           <li>
-            <a href="#" class="nav-item active">
+            <a class="nav-item active" data-target="dashboard">
               <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
               <span>Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item">
+            <a class="nav-item" data-target="projects">
               <svg viewBox="0 0 24 24"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/></svg>
               <span>Projects</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item">
+            <a class="nav-item" data-target="quotes">
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/></svg>
               <span>Quotes & Invoices</span>
             </a>
           </li>
           <li>
-            <a href="#" class="nav-item">
+            <a class="nav-item" data-target="customers">
               <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
               <span>Customers</span>
             </a>
@@ -314,83 +316,102 @@
       </nav>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="main-content">
       <header class="top-bar">
+        <h1 id="page-title" class="view-title">Dashboard</h1>
         <div id="clock" class="clock-display">00:00</div>
       </header>
 
-      <section class="metrics-row">
-        <div class="card metric-card">
-          <span class="metric-label">Monthly Profit</span>
-          <span class="metric-value">A$423.50</span>
-          <span class="metric-sub">Aug: A$0.00</span>
-        </div>
-        <div class="card metric-card">
-          <span class="metric-label">Revenue</span>
-          <span class="metric-value">A$1,126.00</span>
-          <span class="metric-sub">all recorded</span>
-        </div>
-        <div class="card metric-card">
-          <span class="metric-label">Expenses</span>
-          <span class="metric-value negative">-A$702.50</span>
-          <span class="metric-sub">margin -165.9%</span>
-        </div>
-        <div class="card metric-card">
-          <span class="metric-label">Unpaid Invoices</span>
-          <span class="metric-value">A$1,222.00</span>
-          <span class="metric-sub">1 open</span>
-        </div>
-      </section>
-
-      <section class="cards-grid">
-        <!-- Financial Performance Card with Rendered Bar Visualizer -->
-        <div class="card feature-card">
-          <div class="card-header">
-            <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-              <path d="M5 9.2h2V19H5V9.2zm6-4h2v13.8h-2V5.2zm6 8h2v5.8h-2V13.2z"/>
-            </svg>
-            <h2>Financial Performance</h2>
+      <!-- View 1: Dashboard -->
+      <div id="view-dashboard" class="view-section active-view">
+        <section class="metrics-row">
+          <div class="card metric-card">
+            <span class="metric-label">Monthly Profit</span>
+            <span class="metric-value">A$423.50</span>
+            <span class="metric-sub">Aug: A$0.00</span>
           </div>
-          <div class="card-body">
-            <div class="bar-chart-container">
-              <div class="bar-group">
-                <div class="bar-track">
-                  <div class="bar-fill revenue" style="height: 100%;"></div>
+          <div class="card metric-card">
+            <span class="metric-label">Revenue</span>
+            <span class="metric-value">A$1,126.00</span>
+            <span class="metric-sub">all recorded</span>
+          </div>
+          <div class="card metric-card">
+            <span class="metric-label">Expenses</span>
+            <span class="metric-value negative">-A$702.50</span>
+            <span class="metric-sub">margin -165.9%</span>
+          </div>
+          <div class="card metric-card">
+            <span class="metric-label">Unpaid Invoices</span>
+            <span class="metric-value">A$1,222.00</span>
+            <span class="metric-sub">1 open</span>
+          </div>
+        </section>
+
+        <section class="cards-grid">
+          <div class="card feature-card">
+            <div class="card-header">
+              <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M5 9.2h2V19H5V9.2zm6-4h2v13.8h-2V5.2zm6 8h2v5.8h-2V13.2z"/>
+              </svg>
+              <h2>Financial Performance</h2>
+            </div>
+            <div class="card-body">
+              <div class="bar-chart-container">
+                <div class="bar-group">
+                  <div class="bar-track"><div class="bar-fill revenue" style="height: 100%;"></div></div>
+                  <span class="bar-label">Revenue</span>
                 </div>
-                <span class="bar-label">Revenue</span>
-              </div>
-              <div class="bar-group">
-                <div class="bar-track">
-                  <div class="bar-fill expenses" style="height: 62%;"></div>
+                <div class="bar-group">
+                  <div class="bar-track"><div class="bar-fill expenses" style="height: 62%;"></div></div>
+                  <span class="bar-label">Expenses</span>
                 </div>
-                <span class="bar-label">Expenses</span>
-              </div>
-              <div class="bar-group">
-                <div class="bar-track">
-                  <div class="bar-fill profit" style="height: 38%;"></div>
+                <div class="bar-group">
+                  <div class="bar-track"><div class="bar-fill profit" style="height: 38%;"></div></div>
+                  <span class="bar-label">Profit</span>
                 </div>
-                <span class="bar-label">Profit</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Project Status Card -->
-        <div class="card feature-card">
-          <div class="card-header">
-            <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-              <path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/>
-            </svg>
-            <h2>Project Status</h2>
+          <div class="card feature-card">
+            <div class="card-header">
+              <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/>
+              </svg>
+              <h2>Project Status</h2>
+            </div>
+            <div class="card-body">
+              <div class="donut-ring"></div>
+              <p class="total-count">2</p>
+              <p class="sub-text">total active projects</p>
+            </div>
           </div>
-          <div class="card-body">
-            <div class="donut-ring"></div>
-            <p class="total-count">2</p>
-            <p class="sub-text">total active projects</p>
-          </div>
+        </section>
+      </div>
+
+      <!-- View 2: Projects -->
+      <div id="view-projects" class="view-section">
+        <div class="card">
+          <h2>Active Projects</h2>
+          <p class="sub-text" style="margin-top: 8px;">Project lists and stage tracking module.</p>
         </div>
-      </section>
+      </div>
+
+      <!-- View 3: Quotes & Invoices -->
+      <div id="view-quotes" class="view-section">
+        <div class="card">
+          <h2>Quotes & Invoices</h2>
+          <p class="sub-text" style="margin-top: 8px;">Manage customer quotes and open invoice records.</p>
+        </div>
+      </div>
+
+      <!-- View 4: Customers -->
+      <div id="view-customers" class="view-section">
+        <div class="card">
+          <h2>Customer Directory</h2>
+          <p class="sub-text" style="margin-top: 8px;">Manage active client contacts and profiles.</p>
+        </div>
+      </div>
     </main>
   </div>
 
