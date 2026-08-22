@@ -4,10 +4,174 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ProjectPro — Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <meta name="theme-color" content="#0f172a">
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent-blue: #38bdf8;
+      --accent-green: #4ade80;
+      --accent-red: #f87171;
+      --accent-purple: #c084fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Header */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .app-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .clock-display {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      background: var(--card-bg);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    /* Base Card Styling */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Metrics Row Grid */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .metric-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .metric-value.negative {
+      color: var(--accent-red);
+    }
+
+    .metric-sub {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* Feature Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-header h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .card-icon {
+      color: var(--accent-blue);
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      border-top: 1px solid var(--card-border);
+      padding-top: 16px;
+    }
+
+    .chart-placeholder {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .donut-ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 8px solid var(--accent-purple);
+      border-top-color: var(--accent-blue);
+      margin-bottom: 12px;
+    }
+
+    .total-count {
+      font-size: 2.2rem;
+      font-weight: 800;
+    }
+
+    .sub-text {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+  </style>
 </head>
 <body id="app-body">
   <div id="app" class="app-container">
