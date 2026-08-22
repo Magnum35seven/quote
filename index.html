@@ -79,6 +79,7 @@
       font-size: 0.95rem;
       cursor: pointer;
       transition: all 0.2s ease;
+      user-select: none;
     }
 
     .nav-item:hover, .nav-item.active {
@@ -289,28 +290,28 @@
       <nav>
         <ul class="nav-list">
           <li>
-            <a class="nav-item active" data-target="dashboard">
+            <div class="nav-item active" onclick="switchView('dashboard', 'Dashboard', this)">
               <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
               <span>Dashboard</span>
-            </a>
+            </div>
           </li>
           <li>
-            <a class="nav-item" data-target="projects">
+            <div class="nav-item" onclick="switchView('projects', 'Projects', this)">
               <svg viewBox="0 0 24 24"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/></svg>
               <span>Projects</span>
-            </a>
+            </div>
           </li>
           <li>
-            <a class="nav-item" data-target="quotes">
+            <div class="nav-item" onclick="switchView('quotes', 'Quotes & Invoices', this)">
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/></svg>
               <span>Quotes & Invoices</span>
-            </a>
+            </div>
           </li>
           <li>
-            <a class="nav-item" data-target="customers">
+            <div class="nav-item" onclick="switchView('customers', 'Customers', this)">
               <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
               <span>Customers</span>
-            </a>
+            </div>
           </li>
         </ul>
       </nav>
@@ -415,6 +416,37 @@
     </main>
   </div>
 
-  <script src="js/app.js"></script>
+  <script>
+    function switchView(viewId, title, el) {
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      el.classList.add('active');
+
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active-view'));
+      const activeSec = document.getElementById('view-' + viewId);
+      if (activeSec) activeSec.classList.add('active-view');
+
+      const pageTitle = document.getElementById('page-title');
+      if (pageTitle) pageTitle.textContent = title;
+    }
+
+    function updateClock() {
+      const clockEl = document.getElementById('clock');
+      if (!clockEl) return;
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      clockEl.textContent = hours + ':' + minutes;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script>
 </body>
 </html>
