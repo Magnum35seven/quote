@@ -41,7 +41,6 @@
       min-height: 100vh;
     }
 
-    /* Sidebar Navigation */
     .sidebar {
       width: var(--sidebar-width);
       background-color: var(--card-bg);
@@ -74,7 +73,6 @@
       padding: 10px 14px;
       border-radius: 8px;
       color: var(--text-secondary);
-      text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
       cursor: pointer;
@@ -93,7 +91,6 @@
       fill: currentColor;
     }
 
-    /* Main Content */
     .main-content {
       flex: 1;
       padding: 24px;
@@ -126,7 +123,6 @@
       border: 1px solid var(--card-border);
     }
 
-    /* View Sections */
     .view-section {
       display: none;
       flex-direction: column;
@@ -137,7 +133,6 @@
       display: flex;
     }
 
-    /* Cards */
     .card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -170,14 +165,8 @@
       color: var(--text-primary);
     }
 
-    .metric-value.negative {
-      color: var(--accent-red);
-    }
-
-    .metric-sub {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-    }
+    .metric-value.negative { color: var(--accent-red); }
+    .metric-sub { font-size: 0.75rem; color: var(--text-secondary); }
 
     .cards-grid {
       display: grid;
@@ -202,9 +191,7 @@
       font-weight: 600;
     }
 
-    .card-icon {
-      color: var(--accent-blue);
-    }
+    .card-icon { color: var(--accent-blue); }
 
     .card-body {
       display: flex;
@@ -217,7 +204,6 @@
       width: 100%;
     }
 
-    /* Bar Chart Visualizer */
     .bar-chart-container {
       display: flex;
       align-items: flex-end;
@@ -249,19 +235,11 @@
       overflow: hidden;
     }
 
-    .bar-fill {
-      width: 100%;
-      border-radius: 6px;
-    }
-
+    .bar-fill { width: 100%; border-radius: 6px; }
     .bar-fill.revenue { background-color: var(--accent-blue); }
     .bar-fill.expenses { background-color: var(--accent-red); }
     .bar-fill.profit { background-color: var(--accent-green); }
-
-    .bar-label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-    }
+    .bar-label { font-size: 0.75rem; color: var(--text-secondary); }
 
     .donut-ring {
       width: 90px;
@@ -272,17 +250,43 @@
       margin-bottom: 12px;
     }
 
-    .total-count {
-      font-size: 2.2rem;
-      font-weight: 800;
+    .total-count { font-size: 2.2rem; font-weight: 800; }
+    .sub-text { font-size: 0.8rem; color: var(--text-secondary); }
+
+    /* Tables & Action Controls */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
     }
 
-    .sub-text {
-      font-size: 0.8rem;
+    .btn-primary {
+      background-color: var(--accent-blue);
+      color: #0f172a;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.9; }
+
+    .btn-icon {
+      background: none;
+      border: none;
       color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      border-radius: 4px;
     }
 
-    /* Tables & Lists UI */
+    .btn-icon:hover { color: var(--accent-blue); background-color: #283548; }
+
     .data-table {
       width: 100%;
       border-collapse: collapse;
@@ -323,15 +327,70 @@
       margin-top: 6px;
     }
 
-    .progress-bar-fill {
-      height: 100%;
-      background-color: var(--accent-blue);
+    .progress-bar-fill { height: 100%; background-color: var(--accent-blue); }
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+
+    /* Modal Styling */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
     }
 
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    .modal-overlay.active { display: flex; }
+
+    .modal-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
+    }
+
+    .modal-card h3 { font-size: 1.2rem; }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .form-group input, .form-group select {
+      background-color: var(--bg-color);
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      padding: 10px;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--card-border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -375,7 +434,7 @@
         <div id="clock" class="clock-display">00:00</div>
       </header>
 
-      <!-- View 1: Dashboard -->
+      <!-- Dashboard View -->
       <div id="view-dashboard" class="view-section active-view">
         <section class="metrics-row">
           <div class="card metric-card">
@@ -403,165 +462,118 @@
         <section class="cards-grid">
           <div class="card feature-card">
             <div class="card-header">
-              <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M5 9.2h2V19H5V9.2zm6-4h2v13.8h-2V5.2zm6 8h2v5.8h-2V13.2z"/>
-              </svg>
+              <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M5 9.2h2V19H5V9.2zm6-4h2v13.8h-2V5.2zm6 8h2v5.8h-2V13.2z"/></svg>
               <h2>Financial Performance</h2>
             </div>
             <div class="card-body">
               <div class="bar-chart-container">
-                <div class="bar-group">
-                  <div class="bar-track"><div class="bar-fill revenue" style="height: 100%;"></div></div>
-                  <span class="bar-label">Revenue</span>
-                </div>
-                <div class="bar-group">
-                  <div class="bar-track"><div class="bar-fill expenses" style="height: 62%;"></div></div>
-                  <span class="bar-label">Expenses</span>
-                </div>
-                <div class="bar-group">
-                  <div class="bar-track"><div class="bar-fill profit" style="height: 38%;"></div></div>
-                  <span class="bar-label">Profit</span>
-                </div>
+                <div class="bar-group"><div class="bar-track"><div class="bar-fill revenue" style="height: 100%;"></div></div><span class="bar-label">Revenue</span></div>
+                <div class="bar-group"><div class="bar-track"><div class="bar-fill expenses" style="height: 62%;"></div></div><span class="bar-label">Expenses</span></div>
+                <div class="bar-group"><div class="bar-track"><div class="bar-fill profit" style="height: 38%;"></div></div><span class="bar-label">Profit</span></div>
               </div>
             </div>
           </div>
 
           <div class="card feature-card">
             <div class="card-header">
-              <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/>
-              </svg>
+              <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/></svg>
               <h2>Project Status</h2>
             </div>
             <div class="card-body">
               <div class="donut-ring"></div>
-              <p class="total-count">2</p>
+              <p id="dashboard-project-count" class="total-count">2</p>
               <p class="sub-text">total active projects</p>
             </div>
           </div>
         </section>
       </div>
 
-      <!-- View 2: Projects (2 Dummy Projects) -->
+      <!-- Projects View -->
       <div id="view-projects" class="view-section">
-        <div class="project-grid">
-          <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-              <div>
-                <h3 style="font-size: 1.1rem;">Commercial Office Fitout</h3>
-                <p class="sub-text">Client: Apex Trading Ltd</p>
-              </div>
-              <span class="status-badge status-active">In Progress</span>
-            </div>
-            <p class="sub-text" style="margin-bottom: 16px;">Full electrical & layout renovation across 2 levels.</p>
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
-              <span>Progress</span>
-              <span>65%</span>
-            </div>
-            <div class="progress-bar-bg">
-              <div class="progress-bar-fill" style="width: 65%;"></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-              <div>
-                <h3 style="font-size: 1.1rem;">Residential Kitchen Remodel</h3>
-                <p class="sub-text">Client: Sarah Jenkins</p>
-              </div>
-              <span class="status-badge status-active">In Progress</span>
-            </div>
-            <p class="sub-text" style="margin-bottom: 16px;">Custom joinery and plumbing upgrades.</p>
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
-              <span>Progress</span>
-              <span>30%</span>
-            </div>
-            <div class="progress-bar-bg">
-              <div class="progress-bar-fill" style="width: 30%;"></div>
-            </div>
-          </div>
+        <div class="section-header">
+          <h2>Active Projects</h2>
+          <button class="btn-primary" onclick="openProjectModal()">+ New Project</button>
         </div>
+        <div id="project-container" class="project-grid"></div>
       </div>
 
-      <!-- View 3: Quotes & Invoices -->
+      <!-- Quotes & Invoices View -->
       <div id="view-quotes" class="view-section">
+        <div class="section-header">
+          <h2>Quotes & Invoices</h2>
+          <button class="btn-primary" onclick="openInvoiceModal()">+ Create Quote / Invoice</button>
+        </div>
         <div class="card">
           <table class="data-table">
             <thead>
-              <tr>
-                <th>Document ID</th>
-                <th>Client</th>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
+              <tr><th>Document ID</th><th>Client</th><th>Type</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>#INV-2024-001</td>
-                <td>Apex Trading Ltd</td>
-                <td>Invoice</td>
-                <td>A$1,222.00</td>
-                <td><span class="status-badge status-pending">Unpaid</span></td>
-              </tr>
-              <tr>
-                <td>#INV-2024-002</td>
-                <td>Sarah Jenkins</td>
-                <td>Invoice</td>
-                <td>A$1,126.00</td>
-                <td><span class="status-badge status-paid">Paid</span></td>
-              </tr>
-              <tr>
-                <td>#QTE-2024-003</td>
-                <td>Metro Logistics</td>
-                <td>Quote</td>
-                <td>A$3,450.00</td>
-                <td><span class="status-badge status-active">Pending Approval</span></td>
-              </tr>
-            </tbody>
+            <tbody id="invoice-table-body"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- View 4: Customers -->
+      <!-- Customers View -->
       <div id="view-customers" class="view-section">
+        <div class="section-header">
+          <h2>Customer Directory</h2>
+          <button class="btn-primary" onclick="openCustomerModal()">+ Add Customer</button>
+        </div>
         <div class="card">
           <table class="data-table">
             <thead>
-              <tr>
-                <th>Client Name</th>
-                <th>Company</th>
-                <th>Email</th>
-                <th>Active Projects</th>
-              </tr>
+              <tr><th>Client Name</th><th>Company</th><th>Email</th><th>Active Projects</th><th>Actions</th></tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Mark Vance</td>
-                <td>Apex Trading Ltd</td>
-                <td>m.vance@apextrading.com</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Sarah Jenkins</td>
-                <td>Private Client</td>
-                <td>s.jenkins@gmail.com</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>David Miller</td>
-                <td>Metro Logistics</td>
-                <td>david@metrologistics.com.au</td>
-                <td>0</td>
-              </tr>
-            </tbody>
+            <tbody id="customer-table-body"></tbody>
           </table>
         </div>
       </div>
     </main>
   </div>
 
+  <!-- Modal Component -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-card">
+      <h3 id="modal-title">Form</h3>
+      <form id="modal-form" onsubmit="handleFormSubmit(event)">
+        <div id="modal-fields" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
+    // State Store Initialization
+    const defaultData = {
+      projects: [
+        { id: '1', title: 'Commercial Office Fitout', client: 'Apex Trading Ltd', description: 'Full electrical & layout renovation across 2 levels.', progress: 65, status: 'In Progress' },
+        { id: '2', title: 'Residential Kitchen Remodel', client: 'Sarah Jenkins', description: 'Custom joinery and plumbing upgrades.', progress: 30, status: 'In Progress' }
+      ],
+      invoices: [
+        { id: '1', docId: '#INV-2024-001', client: 'Apex Trading Ltd', type: 'Invoice', amount: 'A$1,222.00', status: 'Unpaid' },
+        { id: '2', docId: '#INV-2024-002', client: 'Sarah Jenkins', type: 'Invoice', amount: 'A$1,126.00', status: 'Paid' },
+        { id: '3', docId: '#QTE-2024-003', client: 'Metro Logistics', type: 'Quote', amount: 'A$3,450.00', status: 'Pending Approval' }
+      ],
+      customers: [
+        { id: '1', name: 'Mark Vance', company: 'Apex Trading Ltd', email: 'm.vance@apextrading.com', projects: '1' },
+        { id: '2', name: 'Sarah Jenkins', company: 'Private Client', email: 's.jenkins@gmail.com', projects: '1' },
+        { id: '3', name: 'David Miller', company: 'Metro Logistics', email: 'david@metrologistics.com.au', projects: '0' }
+      ]
+    };
+
+    let appData = JSON.parse(localStorage.getItem('projectpro_data')) || defaultData;
+    let currentEditType = null;
+    let currentEditId = null;
+
+    function saveData() {
+      localStorage.setItem('projectpro_data', JSON.stringify(appData));
+      renderAll();
+    }
+
+    // View Navigation
     function switchView(viewId, title, el) {
       document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
       el.classList.add('active');
@@ -570,26 +582,199 @@
       const activeSec = document.getElementById('view-' + viewId);
       if (activeSec) activeSec.classList.add('active-view');
 
-      const pageTitle = document.getElementById('page-title');
-      if (pageTitle) pageTitle.textContent = title;
+      document.getElementById('page-title').textContent = title;
     }
 
+    // Rendering Engine
+    function renderAll() {
+      renderProjects();
+      renderInvoices();
+      renderCustomers();
+      document.getElementById('dashboard-project-count').textContent = appData.projects.length;
+    }
+
+    function renderProjects() {
+      const container = document.getElementById('project-container');
+      container.innerHTML = appData.projects.map(p => `
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+            <div>
+              <h3 style="font-size: 1.1rem;">${p.title}</h3>
+              <p class="sub-text">Client: ${p.client}</p>
+            </div>
+            <div>
+              <span class="status-badge status-active">${p.status}</span>
+              <button class="btn-icon" onclick="editProject('${p.id}')">✏️</button>
+            </div>
+          </div>
+          <p class="sub-text" style="margin-bottom: 16px;">${p.description}</p>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
+            <span>Progress</span>
+            <span>${p.progress}%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: ${p.progress}%;"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderInvoices() {
+      const tbody = document.getElementById('invoice-table-body');
+      tbody.innerHTML = appData.invoices.map(i => `
+        <tr>
+          <td>${i.docId}</td>
+          <td>${i.client}</td>
+          <td>${i.type}</td>
+          <td>${i.amount}</td>
+          <td><span class="status-badge ${i.status === 'Paid' ? 'status-paid' : 'status-pending'}">${i.status}</span></td>
+          <td><button class="btn-icon" onclick="editInvoice('${i.id}')">✏️ Edit</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderCustomers() {
+      const tbody = document.getElementById('customer-table-body');
+      tbody.innerHTML = appData.customers.map(c => `
+        <tr>
+          <td>${c.name}</td>
+          <td>${c.company}</td>
+          <td>${c.email}</td>
+          <td>${c.projects}</td>
+          <td><button class="btn-icon" onclick="editCustomer('${c.id}')">✏️ Edit</button></td>
+        </tr>
+      `).join('');
+    }
+
+    // Modal Operations
+    function openModal(title, fieldsHtml, type, id = null) {
+      currentEditType = type;
+      currentEditId = id;
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-fields').innerHTML = fieldsHtml;
+      document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+    }
+
+    function openProjectModal(item = { title: '', client: '', description: '', progress: 0, status: 'In Progress' }) {
+      openModal(item.id ? 'Edit Project' : 'New Project', `
+        <div class="form-group"><label>Title</label><input id="field-title" value="${item.title}" required></div>
+        <div class="form-group"><label>Client</label><input id="field-client" value="${item.client}" required></div>
+        <div class="form-group"><label>Description</label><input id="field-desc" value="${item.description}"></div>
+        <div class="form-group"><label>Progress (%)</label><input type="number" id="field-progress" min="0" max="100" value="${item.progress}"></div>
+      `, 'project', item.id);
+    }
+
+    function editProject(id) {
+      const p = appData.projects.find(x => x.id === id);
+      if (p) openProjectModal(p);
+    }
+
+    function openInvoiceModal(item = { docId: '#INV-2024-00' + (appData.invoices.length + 1), client: '', type: 'Invoice', amount: 'A$0.00', status: 'Unpaid' }) {
+      openModal(item.id ? 'Edit Document' : 'Create Quote/Invoice', `
+        <div class="form-group"><label>Doc ID</label><input id="field-docid" value="${item.docId}" required></div>
+        <div class="form-group"><label>Client</label><input id="field-client" value="${item.client}" required></div>
+        <div class="form-group"><label>Type</label>
+          <select id="field-type"><option ${item.type === 'Invoice' ? 'selected' : ''}>Invoice</option><option ${item.type === 'Quote' ? 'selected' : ''}>Quote</option></select>
+        </div>
+        <div class="form-group"><label>Amount</label><input id="field-amount" value="${item.amount}" required></div>
+        <div class="form-group"><label>Status</label>
+          <select id="field-status">
+            <option ${item.status === 'Unpaid' ? 'selected' : ''}>Unpaid</option>
+            <option ${item.status === 'Paid' ? 'selected' : ''}>Paid</option>
+            <option ${item.status === 'Pending Approval' ? 'selected' : ''}>Pending Approval</option>
+          </select>
+        </div>
+      `, 'invoice', item.id);
+    }
+
+    function editInvoice(id) {
+      const i = appData.invoices.find(x => x.id === id);
+      if (i) openInvoiceModal(i);
+    }
+
+    function openCustomerModal(item = { name: '', company: '', email: '', projects: '0' }) {
+      openModal(item.id ? 'Edit Customer' : 'Add Customer', `
+        <div class="form-group"><label>Name</label><input id="field-name" value="${item.name}" required></div>
+        <div class="form-group"><label>Company</label><input id="field-company" value="${item.company}"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="field-email" value="${item.email}" required></div>
+        <div class="form-group"><label>Active Projects</label><input type="number" id="field-projects" value="${item.projects}"></div>
+      `, 'customer', item.id);
+    }
+
+    function editCustomer(id) {
+      const c = appData.customers.find(x => x.id === id);
+      if (c) openCustomerModal(c);
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      if (currentEditType === 'project') {
+        const payload = {
+          id: currentEditId || String(Date.now()),
+          title: document.getElementById('field-title').value,
+          client: document.getElementById('field-client').value,
+          description: document.getElementById('field-desc').value,
+          progress: Number(document.getElementById('field-progress').value),
+          status: 'In Progress'
+        };
+        if (currentEditId) {
+          const idx = appData.projects.findIndex(x => x.id === currentEditId);
+          appData.projects[idx] = payload;
+        } else {
+          appData.projects.push(payload);
+        }
+      } else if (currentEditType === 'invoice') {
+        const payload = {
+          id: currentEditId || String(Date.now()),
+          docId: document.getElementById('field-docid').value,
+          client: document.getElementById('field-client').value,
+          type: document.getElementById('field-type').value,
+          amount: document.getElementById('field-amount').value,
+          status: document.getElementById('field-status').value
+        };
+        if (currentEditId) {
+          const idx = appData.invoices.findIndex(x => x.id === currentEditId);
+          appData.invoices[idx] = payload;
+        } else {
+          appData.invoices.push(payload);
+        }
+      } else if (currentEditType === 'customer') {
+        const payload = {
+          id: currentEditId || String(Date.now()),
+          name: document.getElementById('field-name').value,
+          company: document.getElementById('field-company').value,
+          email: document.getElementById('field-email').value,
+          projects: document.getElementById('field-projects').value
+        };
+        if (currentEditId) {
+          const idx = appData.customers.findIndex(x => x.id === currentEditId);
+          appData.customers[idx] = payload;
+        } else {
+          appData.customers.push(payload);
+        }
+      }
+      saveData();
+      closeModal();
+    }
+
+    // App Initialization
     function updateClock() {
       const clockEl = document.getElementById('clock');
       if (!clockEl) return;
       const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      clockEl.textContent = hours + ':' + minutes;
+      clockEl.textContent = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
     }
     updateClock();
     setInterval(updateClock, 1000);
+    renderAll();
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(registrations => {
-        for (let registration of registrations) {
-          registration.unregister();
-        }
+        for (let registration of registrations) registration.unregister();
       });
     }
   </script>
