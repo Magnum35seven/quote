@@ -56,8 +56,6 @@
     .metric-card { display: flex; flex-direction: column; gap: 6px; }
     .metric-label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
     .metric-value { font-size: 1.6rem; font-weight: 800; color: var(--text-primary); }
-    .metric-value.negative { color: var(--accent-red); }
-    .metric-sub { font-size: 0.75rem; color: var(--text-secondary); }
 
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
     .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
@@ -87,18 +85,30 @@
     /* Modal Framework */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
     .modal-overlay.active { display: flex; }
-    .modal-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 24px; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+    .modal-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 24px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
     
+    .form-section-header { font-size: 0.9rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--card-border); padding-bottom: 6px; margin-top: 8px; }
     .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-group label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; }
     .form-group input, .form-group select, .form-group textarea { background-color: var(--bg-color); border: 1px solid var(--card-border); color: var(--text-primary); padding: 10px; border-radius: 8px; outline: none; font-size: 0.9rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    /* Detail View Styling */
-    .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-blue); cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; }
+    /* Dynamic Line Items */
     .line-item-row { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 8px; align-items: center; margin-bottom: 8px; }
     .task-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--card-border); }
     .task-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent-blue); cursor: pointer; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-blue); cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; }
+    
+    .notes-box {
+      background-color: var(--bg-color);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 <body>
@@ -136,7 +146,7 @@
       </nav>
     </aside>
 
-    <!-- Main Section -->
+    <!-- Main Content Area -->
     <main class="main-content">
       <header class="top-bar">
         <h1 id="page-title" class="view-title">Dashboard</h1>
@@ -149,22 +159,22 @@
           <div class="card metric-card">
             <span class="metric-label">Total Revenue</span>
             <span id="metric-revenue" class="metric-value">A$0.00</span>
-            <span class="metric-sub">Paid Invoices</span>
+            <span class="metric-sub" style="font-size:0.75rem; color:var(--text-secondary);">Paid Invoices</span>
           </div>
           <div class="card metric-card">
             <span class="metric-label">Unpaid / Pending</span>
             <span id="metric-unpaid" class="metric-value">A$0.00</span>
-            <span class="metric-sub">Outstanding Quotes & Invoices</span>
+            <span class="metric-sub" style="font-size:0.75rem; color:var(--text-secondary);">Outstanding Quotes & Invoices</span>
           </div>
           <div class="card metric-card">
             <span class="metric-label">Active Projects</span>
             <span id="metric-projects" class="metric-value">0</span>
-            <span class="metric-sub">In Progress</span>
+            <span class="metric-sub" style="font-size:0.75rem; color:var(--text-secondary);">In Progress</span>
           </div>
           <div class="card metric-card">
             <span class="metric-label">Total Clients</span>
             <span id="metric-customers" class="metric-value">0</span>
-            <span class="metric-sub">Active Contacts</span>
+            <span class="metric-sub" style="font-size:0.75rem; color:var(--text-secondary);">Active Directory</span>
           </div>
         </section>
 
@@ -176,9 +186,7 @@
           <div class="card">
             <div class="section-header"><h2>Quick Actions</h2></div>
             <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
-              <button class="btn-primary" onclick="openProjectModal()">+ Create New Project</button>
-              <button class="btn-secondary" onclick="openInvoiceModal()">+ Build Quote / Invoice</button>
-              <button class="btn-secondary" onclick="openCustomerModal()">+ Add Customer Profile</button>
+              <button class="btn-primary" onclick="openUnifiedProjectModal()">+ New All-in-One Project</button>
             </div>
           </div>
         </section>
@@ -188,7 +196,7 @@
       <div id="view-projects" class="view-section">
         <div class="section-header">
           <h2>Active Projects</h2>
-          <button class="btn-primary" onclick="openProjectModal()">+ New Project</button>
+          <button class="btn-primary" onclick="openUnifiedProjectModal()">+ New Project Wizard</button>
         </div>
         <div id="project-container" class="project-grid"></div>
       </div>
@@ -203,12 +211,11 @@
       <div id="view-quotes" class="view-section">
         <div class="section-header">
           <h2>Quotes & Invoices</h2>
-          <button class="btn-primary" onclick="openInvoiceModal()">+ Create Quote / Invoice</button>
         </div>
         <div class="card">
           <table class="data-table">
             <thead>
-              <tr><th>Document ID</th><th>Client</th><th>Type</th><th>Total</th><th>Status</th><th>Actions</th></tr>
+              <tr><th>Doc ID</th><th>Client Name</th><th>Type</th><th>Total</th><th>Status</th></tr>
             </thead>
             <tbody id="invoice-table-body"></tbody>
           </table>
@@ -219,12 +226,11 @@
       <div id="view-customers" class="view-section">
         <div class="section-header">
           <h2>Customer Directory</h2>
-          <button class="btn-primary" onclick="openCustomerModal()">+ Add Customer</button>
         </div>
         <div class="card">
           <table class="data-table">
             <thead>
-              <tr><th>Client Name</th><th>Company</th><th>Contact</th><th>Site / Billing Address</th><th>Actions</th></tr>
+              <tr><th>Client Name</th><th>Company</th><th>Phone</th><th>Email</th><th>Address</th></tr>
             </thead>
             <tbody id="customer-table-body"></tbody>
           </table>
@@ -236,74 +242,103 @@
   <!-- Modal Wrapper -->
   <div id="modal-overlay" class="modal-overlay">
     <div class="modal-card">
-      <h3 id="modal-title">Form</h3>
-      <form id="modal-form" onsubmit="handleFormSubmit(event)">
-        <div id="modal-fields" style="display: flex; flex-direction: column; gap: 14px;"></div>
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+      <h3 id="modal-title">New Complete Project Setup</h3>
+      <form id="modal-form" onsubmit="handleUnifiedSubmit(event)">
+        
+        <!-- SECTION 1: CUSTOMER SELECTION / CREATION -->
+        <div class="form-section-header">1. Customer Information</div>
+        <div class="form-group" style="margin-top: 6px;">
+          <label>Select Existing Customer or Create New</label>
+          <select id="cust-selection-mode" onchange="toggleCustomerMode(this.value)">
+            <option value="new">+ Create New Customer Profile</option>
+          </select>
+        </div>
+
+        <div id="new-customer-fields">
+          <div class="form-row" style="margin-top: 8px;">
+            <div class="form-group"><label>Full Name</label><input id="cust-name" placeholder="John Doe" required></div>
+            <div class="form-group"><label>Company Name</label><input id="cust-company" placeholder="Acme Inc"></div>
+          </div>
+          <div class="form-row" style="margin-top: 8px;">
+            <div class="form-group"><label>Phone Number</label><input id="cust-phone" placeholder="+61 400 000 000" required></div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="cust-email" placeholder="john@example.com" required></div>
+          </div>
+          <div class="form-group" style="margin-top: 8px;">
+            <label>Billing / Primary Site Address</label>
+            <input id="cust-address" placeholder="123 Main St, Sydney NSW 2000">
+          </div>
+        </div>
+
+        <!-- SECTION 2: PROJECT INFO & NOTES -->
+        <div class="form-section-header">2. Project Details & Scope</div>
+        <div class="form-group" style="margin-top: 6px;">
+          <label>Project Title / Name</label>
+          <input id="proj-title" placeholder="e.g. Commercial Office Renovation" required>
+        </div>
+        <div class="form-group" style="margin-top: 8px;">
+          <label>Job Site Address (Leave blank to use customer address)</label>
+          <input id="proj-address" placeholder="Same as client address">
+        </div>
+        <div class="form-group" style="margin-top: 8px;">
+          <label>Project Scope & Notes (What's involved)</label>
+          <textarea id="proj-notes" rows="4" placeholder="Detail the full scope of work, special requirements, access codes, site conditions, etc."></textarea>
+        </div>
+
+        <!-- SECTION 3: INITIAL ITEMIZED QUOTE -->
+        <div class="form-section-header">3. Initial Detailed Quote</div>
+        <p style="font-size:0.75rem; color:var(--text-secondary); margin-top: 2px;">Add line items to generate the linked project quote automatically.</p>
+        
+        <div id="line-items-wrapper" style="margin-top: 8px;">
+          <div class="line-item-row">
+            <input placeholder="Item Description (e.g. Rough-in Labour)" class="item-desc" required>
+            <input type="number" placeholder="Qty" class="item-qty" value="1" required min="1">
+            <input type="number" placeholder="Price ($)" class="item-price" value="0" required min="0">
+            <button type="button" class="btn-icon" onclick="removeLineItem(this)" style="color:var(--accent-red)">✕</button>
+          </div>
+        </div>
+        <button type="button" class="btn-secondary" onclick="addLineItemRow()" style="font-size: 0.75rem; padding: 4px 10px; margin-top: 4px;">+ Add Line Item</button>
+
+        <!-- SUBMIT ACTIONS -->
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; border-top: 1px solid var(--card-border); padding-top: 14px;">
           <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
-          <button type="submit" class="btn-primary">Save Changes</button>
+          <button type="submit" class="btn-primary">Create Complete Project</button>
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // Primary Seed Data
     const defaultData = {
       projects: [
         {
-          id: 'p1', title: 'Commercial Office Fitout', customerId: 'c1', client: 'Apex Trading Ltd',
-          address: '45 Clarence St, Sydney NSW 2000', budget: 'A$45,000.00', status: 'In Progress',
+          id: 'p1', title: 'Commercial Office Fitout', customerId: 'c1', quoteId: 'i1',
+          address: '45 Clarence St, Sydney NSW 2000', status: 'In Progress',
+          notes: 'Full level 3 office refit including partition removal, fresh glass panel Installation, data cabling for 24 workstations, and new energy-efficient LED downlights.',
           tasks: [
             { text: 'Initial site measure & layout plan', completed: true },
             { text: 'Electrical rough-in & cabling', completed: true },
-            { text: 'Custom timber joinery installation', completed: false },
-            { text: 'Final sign-off & safety checks', completed: false }
-          ]
-        },
-        {
-          id: 'p2', title: 'Residential Kitchen Remodel', customerId: 'c2', client: 'Sarah Jenkins',
-          address: '128 Pacific Hwy, Turramurra NSW 2074', budget: 'A$18,500.00', status: 'In Progress',
-          tasks: [
-            { text: 'Demolition & cabinet removal', completed: true },
-            { text: 'Plumbing and stone benchtop fitting', completed: false },
-            { text: 'Backsplash tiling and splashback', completed: false }
+            { text: 'Custom timber joinery installation', completed: false }
           ]
         }
       ],
       invoices: [
         {
-          id: 'i1', docId: '#INV-2026-001', client: 'Apex Trading Ltd', type: 'Invoice', status: 'Unpaid',
+          id: 'i1', docId: '#QTE-2026-001', customerId: 'c1', projectId: 'p1', type: 'Quote', status: 'Pending Approval',
           items: [
-            { desc: 'Phase 1 Structural Work', qty: 1, price: 1200 },
-            { desc: 'Electrical Materials & Supplies', qty: 1, price: 342 }
-          ]
-        },
-        {
-          id: 'i2', docId: '#INV-2026-002', client: 'Sarah Jenkins', type: 'Invoice', status: 'Paid',
-          items: [
-            { desc: 'Initial Project Deposit', qty: 1, price: 1126 }
-          ]
-        },
-        {
-          id: 'i3', docId: '#QTE-2026-003', client: 'David Miller', type: 'Quote', status: 'Pending Approval',
-          items: [
-            { desc: 'Commercial HVAC Installation Assessment', qty: 1, price: 3450 }
+            { desc: 'Phase 1 Structural Work', qty: 1, price: 12000 },
+            { desc: 'Electrical Materials & Supplies', qty: 1, price: 3420 }
           ]
         }
       ],
       customers: [
-        { id: 'c1', name: 'Mark Vance', company: 'Apex Trading Ltd', email: 'm.vance@apextrading.com', phone: '+61 412 345 678', address: '45 Clarence St, Sydney NSW 2000' },
-        { id: 'c2', name: 'Sarah Jenkins', company: 'Private Client', email: 's.jenkins@gmail.com', phone: '+61 498 765 432', address: '128 Pacific Hwy, Turramurra NSW 2074' },
-        { id: 'c3', name: 'David Miller', company: 'Metro Logistics', email: 'david@metrologistics.com.au', phone: '+61 400 111 222', address: '88 Logistics Way, Blacktown NSW 2148' }
+        { id: 'c1', name: 'Mark Vance', company: 'Apex Trading Ltd', email: 'm.vance@apextrading.com', phone: '+61 412 345 678', address: '45 Clarence St, Sydney NSW 2000' }
       ]
     };
 
-    let appData = JSON.parse(localStorage.getItem('projectpro_v2_data')) || defaultData;
-    let currentEditType = null, currentEditId = null;
+    let appData = JSON.parse(localStorage.getItem('projectpro_v4_data')) || defaultData;
 
     function saveData() {
-      localStorage.setItem('projectpro_v2_data', JSON.stringify(appData));
+      localStorage.setItem('projectpro_v4_data', JSON.stringify(appData));
       renderAll();
     }
 
@@ -322,7 +357,6 @@
       return items.reduce((sum, item) => sum + (Number(item.qty || 0) * Number(item.price || 0)), 0);
     }
 
-    // Render Engine
     function renderAll() {
       renderDashboard();
       renderProjects();
@@ -331,8 +365,7 @@
     }
 
     function renderDashboard() {
-      let totalPaid = 0;
-      let totalUnpaid = 0;
+      let totalPaid = 0, totalUnpaid = 0;
 
       appData.invoices.forEach(inv => {
         const total = calculateInvoiceTotal(inv.items || []);
@@ -350,6 +383,7 @@
     }
 
     function getProjectCardHtml(p) {
+      const cust = appData.customers.find(c => c.id === p.customerId) || { name: 'Unknown' };
       const completedTasks = p.tasks.filter(t => t.completed).length;
       const progressPercent = p.tasks.length ? Math.round((completedTasks / p.tasks.length) * 100) : 0;
 
@@ -358,11 +392,11 @@
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
             <div>
               <h3 style="font-size: 1.1rem;">${p.title}</h3>
-              <p class="metric-sub">Client: ${p.client}</p>
+              <p style="font-size:0.8rem; color:var(--text-secondary);">Client: ${cust.name} ${cust.company ? `(${cust.company})` : ''}</p>
             </div>
             <span class="status-badge status-active">${p.status}</span>
           </div>
-          <p class="metric-sub" style="margin-bottom: 12px;">📍 ${p.address}</p>
+          <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom: 12px;">📍 ${p.address}</p>
           <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
             <span>Tasks Progress (${completedTasks}/${p.tasks.length})</span>
             <span>${progressPercent}%</span>
@@ -375,40 +409,69 @@
     }
 
     function renderProjects() {
-      const container = document.getElementById('project-container');
-      container.innerHTML = appData.projects.map(p => getProjectCardHtml(p)).join('');
+      document.getElementById('project-container').innerHTML = appData.projects.map(p => getProjectCardHtml(p)).join('');
     }
 
     function viewProjectDetail(id) {
       const p = appData.projects.find(x => x.id === id);
       if (!p) return;
 
-      const cust = appData.customers.find(c => c.id === p.customerId) || { name: p.client, phone: 'N/A', email: 'N/A', address: p.address };
-      const completedTasks = p.tasks.filter(t => t.completed).length;
-      const progressPercent = p.tasks.length ? Math.round((completedTasks / p.tasks.length) * 100) : 0;
+      const cust = appData.customers.find(c => c.id === p.customerId) || {};
+      const quote = appData.invoices.find(i => i.id === p.quoteId) || { items: [] };
+      const quoteTotal = calculateInvoiceTotal(quote.items);
 
       document.getElementById('project-detail-content').innerHTML = `
         <div class="card" style="display: flex; flex-direction: column; gap: 20px;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div>
-              <h2>${p.title}</h2>
-              <p class="metric-sub" style="font-size: 0.9rem; margin-top: 4px;">📍 Site: ${p.address}</p>
-            </div>
-            <div>
-              <button class="btn-secondary" onclick="editProject('${p.id}')">✏️ Edit Project</button>
+          <div>
+            <h2>${p.title}</h2>
+            <p style="font-size: 0.9rem; color:var(--text-secondary); margin-top: 4px;">📍 Site Address: ${p.address}</p>
+          </div>
+
+          <!-- Linked Customer Card -->
+          <div style="background: var(--bg-color); padding: 16px; border-radius: 12px; border: 1px solid var(--card-border);">
+            <h3 style="font-size: 0.85rem; text-transform:uppercase; color:var(--accent-blue); margin-bottom: 8px;">Linked Customer Details</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; font-size:0.9rem;">
+              <div><span style="color:var(--text-secondary); display:block; font-size:0.75rem;">Name</span><b>${cust.name || 'N/A'}</b></div>
+              <div><span style="color:var(--text-secondary); display:block; font-size:0.75rem;">Company</span><b>${cust.company || '-'}</b></div>
+              <div><span style="color:var(--text-secondary); display:block; font-size:0.75rem;">Phone</span><b>${cust.phone || 'N/A'}</b></div>
+              <div><span style="color:var(--text-secondary); display:block; font-size:0.75rem;">Email</span><b>${cust.email || 'N/A'}</b></div>
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; background: var(--bg-color); padding: 16px; border-radius: 12px;">
-            <div><span class="metric-label">Client Name</span><p style="font-weight:700;">${cust.name}</p></div>
-            <div><span class="metric-label">Phone</span><p style="font-weight:700;">${cust.phone}</p></div>
-            <div><span class="metric-label">Email</span><p style="font-weight:700;">${cust.email}</p></div>
-            <div><span class="metric-label">Est. Budget</span><p style="font-weight:700; color: var(--accent-green);">${p.budget}</p></div>
+          <!-- Project Notes & Scope Card -->
+          <div style="background: var(--bg-color); padding: 16px; border-radius: 12px; border: 1px solid var(--card-border);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h3 style="font-size: 0.85rem; text-transform:uppercase; color:var(--accent-blue);">Project Scope & Notes</h3>
+              <button class="btn-icon" onclick="editProjectNotes('${p.id}')">✏️ Edit Notes</button>
+            </div>
+            <div class="notes-box">${p.notes || 'No detailed scope notes added yet.'}</div>
           </div>
 
+          <!-- Linked Quote Card -->
+          <div style="background: var(--bg-color); padding: 16px; border-radius: 12px; border: 1px solid var(--card-border);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <h3 style="font-size: 0.85rem; text-transform:uppercase; color:var(--accent-blue);">Linked Initial Quote (${quote.docId || 'N/A'})</h3>
+              <b style="color:var(--accent-green); font-size:1.1rem;">A$${quoteTotal.toLocaleString('en-AU', { minimumFractionDigits: 2 })}</b>
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Subtotal</th></tr></thead>
+              <tbody>
+                ${(quote.items || []).map(it => `
+                  <tr>
+                    <td>${it.desc}</td>
+                    <td>${it.qty}</td>
+                    <td>A$${Number(it.price).toFixed(2)}</td>
+                    <td><b>A$${(it.qty * it.price).toFixed(2)}</b></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Checklist -->
           <div>
             <div style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 12px;">
-              <h3>Project Checklist & Tasks</h3>
+              <h3>Project Checklist</h3>
               <button class="btn-primary" style="font-size:0.75rem;" onclick="addTaskPrompt('${p.id}')">+ Add Task</button>
             </div>
             <div style="display: flex; flex-direction: column; gap: 4px;">
@@ -424,6 +487,17 @@
       `;
 
       switchView('project-detail', p.title, null);
+    }
+
+    function editProjectNotes(projId) {
+      const p = appData.projects.find(x => x.id === projId);
+      if (!p) return;
+      const newNotes = prompt("Edit Project Scope & Notes:", p.notes || "");
+      if (newNotes !== null) {
+        p.notes = newNotes;
+        saveData();
+        viewProjectDetail(projId);
+      }
     }
 
     function toggleTask(projId, taskIdx) {
@@ -448,186 +522,146 @@
     }
 
     function renderInvoices() {
-      const tbody = document.getElementById('invoice-table-body');
-      tbody.innerHTML = appData.invoices.map(i => {
+      document.getElementById('invoice-table-body').innerHTML = appData.invoices.map(i => {
+        const cust = appData.customers.find(c => c.id === i.customerId) || { name: 'Unknown' };
         const total = calculateInvoiceTotal(i.items || []);
         return `
           <tr>
             <td><b>${i.docId}</b></td>
-            <td>${i.client}</td>
+            <td>${cust.name}</td>
             <td>${i.type}</td>
             <td><b>A$${total.toLocaleString('en-AU', { minimumFractionDigits: 2 })}</b></td>
             <td><span class="status-badge ${i.status === 'Paid' ? 'status-paid' : 'status-pending'}">${i.status}</span></td>
-            <td><button class="btn-icon" onclick="editInvoice('${i.id}')">✏️ Edit / Build</button></td>
           </tr>
         `;
       }).join('');
     }
 
     function renderCustomers() {
-      const tbody = document.getElementById('customer-table-body');
-      tbody.innerHTML = appData.customers.map(c => `
+      document.getElementById('customer-table-body').innerHTML = appData.customers.map(c => `
         <tr>
           <td><b>${c.name}</b></td>
           <td>${c.company || '-'}</td>
-          <td>${c.phone}<br><span class="metric-sub">${c.email}</span></td>
+          <td>${c.phone}</td>
+          <td>${c.email}</td>
           <td>${c.address || 'N/A'}</td>
-          <td><button class="btn-icon" onclick="editCustomer('${c.id}')">✏️ Edit</button></td>
         </tr>
       `).join('');
     }
 
-    // Modal Form Logic
-    function openModal(title, fieldsHtml, type, id = null) {
-      currentEditType = type;
-      currentEditId = id;
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-fields').innerHTML = fieldsHtml;
+    // Wizard Dynamic UI Handlers
+    function openUnifiedProjectModal() {
+      const selMode = document.getElementById('cust-selection-mode');
+      selMode.innerHTML = `<option value="new">+ Create New Customer Profile</option>` +
+        appData.customers.map(c => `<option value="${c.id}">Use Existing: ${c.name} (${c.company || 'Private'})</option>`).join('');
+      
+      toggleCustomerMode('new');
       document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function toggleCustomerMode(mode) {
+      const fields = document.getElementById('new-customer-fields');
+      const inputs = fields.querySelectorAll('input');
+      if (mode === 'new') {
+        fields.style.display = 'block';
+        inputs.forEach(i => { if (i.id !== 'cust-company' && i.id !== 'cust-address') i.required = true; });
+      } else {
+        fields.style.display = 'none';
+        inputs.forEach(i => i.required = false);
+      }
+    }
+
+    function addLineItemRow() {
+      const container = document.getElementById('line-items-wrapper');
+      const row = document.createElement('div');
+      row.className = 'line-item-row';
+      row.innerHTML = `
+        <input placeholder="Item Description" class="item-desc" required>
+        <input type="number" placeholder="Qty" class="item-qty" value="1" required min="1">
+        <input type="number" placeholder="Price ($)" class="item-price" value="0" required min="0">
+        <button type="button" class="btn-icon" onclick="removeLineItem(this)" style="color:var(--accent-red)">✕</button>
+      `;
+      container.appendChild(row);
+    }
+
+    function removeLineItem(btn) {
+      const rows = document.querySelectorAll('.line-item-row');
+      if (rows.length > 1) {
+        btn.parentElement.remove();
+      }
     }
 
     function closeModal() {
       document.getElementById('modal-overlay').classList.remove('active');
     }
 
-    function openProjectModal(item = { title: '', client: '', address: '', budget: 'A$0.00', status: 'In Progress' }) {
-      openModal(item.id ? 'Edit Project Details' : 'Create New Project', `
-        <div class="form-group"><label>Project Title</label><input id="field-title" value="${item.title}" required placeholder="e.g. Bathroom Fitout"></div>
-        <div class="form-row">
-          <div class="form-group"><label>Client Name</label><input id="field-client" value="${item.client}" required></div>
-          <div class="form-group"><label>Estimated Budget</label><input id="field-budget" value="${item.budget}" required></div>
-        </div>
-        <div class="form-group"><label>Site Address</label><input id="field-address" value="${item.address}" required></div>
-      `, 'project', item.id);
-    }
-
-    function editProject(id) {
-      const p = appData.projects.find(x => x.id === id);
-      if (p) openProjectModal(p);
-    }
-
-    function openInvoiceModal(item = { docId: '#INV-2026-00' + (appData.invoices.length + 1), client: '', type: 'Quote', status: 'Unpaid', items: [{ desc: '', qty: 1, price: 0 }] }) {
-      const itemsHtml = (item.items || []).map((it, idx) => `
-        <div class="line-item-row">
-          <input placeholder="Item Description" class="item-desc" value="${it.desc}" required>
-          <input type="number" placeholder="Qty" class="item-qty" value="${it.qty}" required>
-          <input type="number" placeholder="Price ($)" class="item-price" value="${it.price}" required>
-        </div>
-      `).join('');
-
-      openModal(item.id ? 'Edit Document' : 'Create Itemized Quote / Invoice', `
-        <div class="form-row">
-          <div class="form-group"><label>Doc ID</label><input id="field-docid" value="${item.docId}" required></div>
-          <div class="form-group"><label>Client Name</label><input id="field-client" value="${item.client}" required></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Document Type</label>
-            <select id="field-type">
-              <option ${item.type === 'Quote' ? 'selected' : ''}>Quote</option>
-              <option ${item.type === 'Invoice' ? 'selected' : ''}>Invoice</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Payment Status</label>
-            <select id="field-status">
-              <option ${item.status === 'Unpaid' ? 'selected' : ''}>Unpaid</option>
-              <option ${item.status === 'Paid' ? 'selected' : ''}>Paid</option>
-              <option ${item.status === 'Pending Approval' ? 'selected' : ''}>Pending Approval</option>
-            </select>
-          </div>
-        </div>
-        <div style="margin-top: 8px;">
-          <label style="font-size:0.8rem; color: var(--text-secondary); font-weight:600;">Line Items</label>
-          <div id="line-items-container" style="margin-top: 6px;">${itemsHtml}</div>
-        </div>
-      `, 'invoice', item.id);
-    }
-
-    function editInvoice(id) {
-      const i = appData.invoices.find(x => x.id === id);
-      if (i) openInvoiceModal(i);
-    }
-
-    function openCustomerModal(item = { name: '', company: '', email: '', phone: '', address: '' }) {
-      openModal(item.id ? 'Edit Customer' : 'Add New Customer Profile', `
-        <div class="form-row">
-          <div class="form-group"><label>Full Name</label><input id="field-name" value="${item.name}" required></div>
-          <div class="form-group"><label>Company</label><input id="field-company" value="${item.company}"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Phone Number</label><input id="field-phone" value="${item.phone}" required></div>
-          <div class="form-group"><label>Email Address</label><input type="email" id="field-email" value="${item.email}" required></div>
-        </div>
-        <div class="form-group"><label>Billing / Primary Site Address</label><input id="field-caddress" value="${item.address}"></div>
-      `, 'customer', item.id);
-    }
-
-    function editCustomer(id) {
-      const c = appData.customers.find(x => x.id === id);
-      if (c) openCustomerModal(c);
-    }
-
-    function handleFormSubmit(e) {
+    function handleUnifiedSubmit(e) {
       e.preventDefault();
-      if (currentEditType === 'project') {
-        const payload = {
-          id: currentEditId || String(Date.now()),
-          title: document.getElementById('field-title').value,
-          client: document.getElementById('field-client').value,
-          budget: document.getElementById('field-budget').value,
-          address: document.getElementById('field-address').value,
-          status: 'In Progress',
-          tasks: currentEditId ? (appData.projects.find(p=>p.id === currentEditId).tasks || []) : [{ text: 'Initial Site Inspection', completed: false }]
-        };
-        if (currentEditId) {
-          const idx = appData.projects.findIndex(x => x.id === currentEditId);
-          appData.projects[idx] = payload;
-        } else {
-          appData.projects.push(payload);
-        }
-      } else if (currentEditType === 'invoice') {
-        const descs = Array.from(document.querySelectorAll('.item-desc')).map(i => i.value);
-        const qtys = Array.from(document.querySelectorAll('.item-qty')).map(i => i.value);
-        const prices = Array.from(document.querySelectorAll('.item-price')).map(i => i.value);
+      
+      const mode = document.getElementById('cust-selection-mode').value;
+      let customerId = mode;
 
-        const items = descs.map((d, idx) => ({ desc: d, qty: Number(qtys[idx]), price: Number(prices[idx]) }));
-
-        const payload = {
-          id: currentEditId || String(Date.now()),
-          docId: document.getElementById('field-docid').value,
-          client: document.getElementById('field-client').value,
-          type: document.getElementById('field-type').value,
-          status: document.getElementById('field-status').value,
-          items: items
+      // 1. Handle Customer Setup
+      if (mode === 'new') {
+        customerId = 'c_' + Date.now();
+        const newCust = {
+          id: customerId,
+          name: document.getElementById('cust-name').value,
+          company: document.getElementById('cust-company').value,
+          phone: document.getElementById('cust-phone').value,
+          email: document.getElementById('cust-email').value,
+          address: document.getElementById('cust-address').value
         };
-
-        if (currentEditId) {
-          const idx = appData.invoices.findIndex(x => x.id === currentEditId);
-          appData.invoices[idx] = payload;
-        } else {
-          appData.invoices.push(payload);
-        }
-      } else if (currentEditType === 'customer') {
-        const payload = {
-          id: currentEditId || String(Date.now()),
-          name: document.getElementById('field-name').value,
-          company: document.getElementById('field-company').value,
-          email: document.getElementById('field-email').value,
-          phone: document.getElementById('field-phone').value,
-          address: document.getElementById('field-caddress').value
-        };
-        if (currentEditId) {
-          const idx = appData.customers.findIndex(x => x.id === currentEditId);
-          appData.customers[idx] = payload;
-        } else {
-          appData.customers.push(payload);
-        }
+        appData.customers.push(newCust);
       }
+
+      const custObj = appData.customers.find(c => c.id === customerId);
+
+      // 2. Build Line Items for Quote
+      const descs = Array.from(document.querySelectorAll('.item-desc')).map(i => i.value);
+      const qtys = Array.from(document.querySelectorAll('.item-qty')).map(i => i.value);
+      const prices = Array.from(document.querySelectorAll('.item-price')).map(i => i.value);
+      
+      const items = descs.map((d, idx) => ({ desc: d, qty: Number(qtys[idx]), price: Number(prices[idx]) }));
+
+      const projectId = 'p_' + Date.now();
+      const quoteId = 'i_' + Date.now();
+
+      // 3. Create Linked Quote
+      const newQuote = {
+        id: quoteId,
+        docId: '#QTE-2026-' + String(appData.invoices.length + 1).padStart(3, '0'),
+        customerId: customerId,
+        projectId: projectId,
+        type: 'Quote',
+        status: 'Pending Approval',
+        items: items
+      };
+      appData.invoices.push(newQuote);
+
+      // 4. Create Linked Project
+      const siteAddress = document.getElementById('proj-address').value || (custObj ? custObj.address : '');
+      const newProject = {
+        id: projectId,
+        title: document.getElementById('proj-title').value,
+        customerId: customerId,
+        quoteId: quoteId,
+        address: siteAddress,
+        notes: document.getElementById('proj-notes').value,
+        status: 'In Progress',
+        tasks: [
+          { text: 'Initial Site Measure & Assessment', completed: false },
+          { text: 'Quote Approval & Contract Signing', completed: false }
+        ]
+      };
+      appData.projects.push(newProject);
 
       saveData();
       closeModal();
+      document.getElementById('modal-form').reset();
     }
 
-    // App Initialization
+    // App Clock
     function updateClock() {
       const clockEl = document.getElementById('clock');
       if (!clockEl) return;
