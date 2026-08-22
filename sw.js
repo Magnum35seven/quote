@@ -1,4 +1,4 @@
-const CACHE_NAME = 'projectpro-v1';
+const CACHE_NAME = 'projectpro-v1-00';
 const ASSETS = [
   './',
   './index.html',
