@@ -1,61 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="ProjectPro — offline-first project estimating and job management for homeowners, DIY users, tradies, contractors and service businesses.">
-<title>ProjectPro</title>
-
-<!-- PWA -->
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#6750A4">
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png">
-
-<!-- iOS -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ProjectPro">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-640x1136.png"  media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-750x1334.png"  media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-828x1792.png"  media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
-<link rel="apple-touch-startup-image" href="assets/splash/splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
-
-<link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ProjectPro — Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <meta name="theme-color" content="#0a0a0c">
 </head>
-<body>
-<div id="app" aria-live="polite">
-  <div id="splash-boot">
-    <img src="assets/icons/icon-192.png" alt="ProjectPro" width="96" height="96">
-    <div class="boot-title">ProjectPro</div>
-    <div class="boot-spinner" role="progressbar" aria-label="Loading"></div>
-  </div>
-</div>
-<div id="layer-dialogs"></div>
-<div id="layer-toasts" aria-live="assertive"></div>
+<body id="app-body">
+  <div id="app" class="app-container">
+    <!-- Header -->
+    <header class="top-bar">
+      <h1 class="app-title">ProjectPro</h1>
+      <div id="clock" class="clock-display">00:00</div>
+    </header>
 
-<script src="js/utils.js"></script>
-<script src="js/icons.js"></script>
-<script src="js/crypto.js"></script>
-<script src="js/db.js"></script>
-<script src="js/pdf.js"></script>
-<script src="js/templates.js"></script>
-<script src="js/calc.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/views/dashboard.js"></script>
-<script src="js/views/projects.js"></script>
-<script src="js/views/people.js"></script>
-<script src="js/views/materials.js"></script>
-<script src="js/views/documents.js"></script>
-<script src="js/views/sketch.js"></script>
-<script src="js/views/reports.js"></script>
-<script src="js/views/settings.js"></script>
-<script src="js/app.js"></script>
+    <!-- Main Dashboard View -->
+    <main id="dashboard-view" class="dashboard-grid">
+      <!-- Key Metrics Row -->
+      <section class="metrics-row">
+        <div class="card metric-card">
+          <span class="metric-label">Monthly Profit</span>
+          <span class="metric-value">A$423.50</span>
+          <span class="metric-sub">Aug: A$0.00</span>
+        </div>
+        <div class="card metric-card">
+          <span class="metric-label">Revenue</span>
+          <span class="metric-value">A$1,126.00</span>
+          <span class="metric-sub">all recorded</span>
+        </div>
+        <div class="card metric-card">
+          <span class="metric-label">Expenses</span>
+          <span class="metric-value negative">-A$702.50</span>
+          <span class="metric-sub">margin -165.9%</span>
+        </div>
+        <div class="card metric-card">
+          <span class="metric-label">Unpaid Invoices</span>
+          <span class="metric-value">A$1,222.00</span>
+          <span class="metric-sub">1 open</span>
+        </div>
+      </section>
+
+      <!-- Dashboard Cards -->
+      <section class="cards-grid">
+        <!-- Financial Performance Card -->
+        <div class="card feature-card">
+          <div class="card-header">
+            <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M5 9.2h2V19H5V9.2zm6-4h2v13.8h-2V5.2zm6 8h2v5.8h-2V13.2z"/>
+            </svg>
+            <h2>Financial Performance</h2>
+          </div>
+          <div class="card-body">
+            <div class="chart-placeholder">[ Bar Chart ]</div>
+          </div>
+        </div>
+
+        <!-- Project Breakdown Card -->
+        <div class="card feature-card">
+          <div class="card-header">
+            <svg class="card-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/>
+            </svg>
+            <h2>Project Status</h2>
+          </div>
+          <div class="card-body align-center">
+            <div class="donut-ring"></div>
+            <p class="total-count">2</p>
+            <p class="sub-text">total projects</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
